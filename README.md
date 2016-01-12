@@ -1,4 +1,4 @@
-# bemap
+# BeMAP
 
 ## Install arduino sw
 
