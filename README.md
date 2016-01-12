@@ -1,5 +1,15 @@
 # BeMAP
+A home automation project.
 
-## Install arduino sw
+## Arduino
+[arduino/README.md][ard]
 
-https://www.arduino.cc/en/Main/Donate
+
+
+### Contact
+[@pvieytes][github_profile]
+Readme edited with [dillinger][dill].
+
+[dill]: <http://dillinger.io/>
+[github_profile]: <https://github.com/pvieytes>
+[ard]: <https://github.com/bemap/bemap/blob/master/arduino/README.md>
