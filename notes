@@ -1,0 +1,14 @@
+# set up wifi via shell
+https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md
+
+sudo iwlist wlan0 scan
+sudo vi /etc/wpa_supplicant/wpa_supplicant.conf
+
+add at the end of the file
+network={
+    ssid="The_ESSID_from_earlier"
+    psk="Your_wifi_password"
+}
+
+sudo ifdown wlan0
+sudo ifup wlan0

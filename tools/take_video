@@ -1,0 +1,4 @@
+avconv -f video4linux2 -r 10 -i /dev/video0 -frames 100 /tmp/test.mp4
+
+
+# install avconv: sudo apt-get install libav-tools
