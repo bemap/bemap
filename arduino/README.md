@@ -22,7 +22,7 @@ Change it if it's necessary.
 
 ```sh
 $ cd /path/to/bemap/arduino
-$ ./compile Blink
+$ ./compile.py Blink
 ```
 *Blink* is the dirname.
 
