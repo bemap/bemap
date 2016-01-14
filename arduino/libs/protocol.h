@@ -34,6 +34,8 @@ class Protocol
   String getId();
   String getGetRequestId();
   String getCmd();
+  String getFunction();
+  String getArguments(int position);
   void printData();
   //attributes
   
@@ -49,6 +51,7 @@ class Protocol
   	String _cmd;
   	String _fun;
     String _idRequest;
+    
    //methods
 };
 

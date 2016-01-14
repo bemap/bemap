@@ -27,12 +27,13 @@ void Protocol::readData(){
 
 void Protocol::clearBuffer(){
 	_index = 0;
-    _is_header = false;
-    _completed = false;
-    _completeString = String("");
-    _id = String("");
-    _idRequest =  String("");
-    _cmd =  String("");
+	_is_header = false;
+	_completed = false;
+	_completeString = String("");
+	_id = String("");
+	_idRequest =  String("");
+	_cmd =  String("");
+	_fun =  String("");
 }
 
 bool Protocol::isCompleted(){
@@ -146,7 +147,10 @@ String Protocol::getCmd(){
 	int startCmdIndex;
 	int startRequest;
 
-	
+	if (_cmd.length()>0){
+		return _cmd;
+	}
+
 	//try to get complete string
 	if(_completeString.length() == 0){
 		getCompleteString();
@@ -190,14 +194,93 @@ String Protocol::getCmd(){
 
 
 
-void Protocol::printData(){
-	Serial.print("complete command: ");
-    Serial.println(getCompleteString());
-    Serial.print("id: ");
-    Serial.println(getId());
-    Serial.print("request: ");
-    Serial.println(getGetRequestId());
-    Serial.print("cmd: ");
-    Serial.println(getCmd());
 
+String Protocol::getFunction(){
+	int i;
+	int len;
+	String response = String("");
+	
+	if (_fun.length()>0){
+		return _fun;
+	}
+
+	//try to get _cmd
+	if(_cmd.length() == 0){
+		getCmd();
+		//there is no valid data
+		if(_cmd.length() == 0){
+			return String("");	
+		}
+	}
+	len = _cmd.length();
+	for(i=0; i<len; i++){
+		if((char) _cmd[i] == DATA_SERPARATOR){
+			break;
+		}
+		response = response + (char) _cmd[i];
+	}
+	_fun = response;
+	return response;
+}
+
+String Protocol::getArguments(int position){
+	int argumentIndex = 0;
+	int i;
+	bool capture = false;
+	bool isFun = false;
+	int len;
+	String  response = String("");
+
+	//try to get _fun
+	if(_fun.length() == 0){
+		getFunction();
+		//there is no valid data
+		if(_fun.length() == 0){
+			return String("");	
+		}
+	}
+	len = _cmd.length();
+	for(i=0; i<len; i++){
+		if((char) _cmd[i] == DATA_SERPARATOR){
+			if(capture){
+				break;
+			}
+			if(!isFun){
+				isFun = true;
+			}
+			if(argumentIndex==position){
+				capture = true;
+			} else {
+				argumentIndex++;
+			}
+					
+		} else if (capture){
+			response = response + (char)_cmd[i]; 
+		}
+	}
+	return response;
+}
+
+void Protocol::printData(){
+	int maxArgTry = 20;
+	String arg;
+
+	Serial.print("complete command: ");
+	Serial.println(getCompleteString());
+	Serial.print("id: ");
+	Serial.println(getId());
+	Serial.print("request: ");
+	Serial.println(getGetRequestId());
+	Serial.print("fun: ");
+	Serial.println(getFunction());
+	for(int i=0; i<maxArgTry; i++){
+		arg = getArguments(i);
+		if(arg.length()==0){
+			break;
+		}
+		Serial.print("arg ");
+		Serial.print(i);
+		Serial.print(": ");
+		Serial.println(arg);
+	}
 }

@@ -4,7 +4,7 @@
 byte byteRead;
 Protocol protocol;
 
-void setup() {                
+void setup() {
   Serial.begin(9600);
 }
 
