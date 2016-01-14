@@ -13,7 +13,7 @@ void loop() {
   if (Serial.available()) {
     protocol.readData();
     if (protocol.isCompleted()){
-      Serial.println(protocol.getCompleteString());
+      protocol.printData();      
       protocol.clearBuffer();
     }
   }
