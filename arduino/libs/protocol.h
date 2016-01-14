@@ -4,7 +4,7 @@
 #define protocol_h
 
 
-#define MAX_LENGHT	50 
+#define MAX_LENGHT       50
 #define HEADER '^'
 #define END '*'
 #define ID_SEPARATOR1 '<'
